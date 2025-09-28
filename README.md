@@ -14,7 +14,7 @@
 <body>
 	<div class="card">
 		<h2>Secure Message</h2>
-		<div id="output" class="lock">Locked — available only between 3:00 and 3:59 AM</div>
+		<div id="output" class="lock">Locked</div>
 		<div id="countdown" class="small"></div>
 	</div>
 	<script>
@@ -24,12 +24,8 @@
 			var revB64 = "==gFSwQVURBZD8VI"; // reversed "IV8ZDBRUVQwSFg=="
 			// key char codes reversed: original key is "t1mex" (chars: 116,49,109,101,120)
 			var revKeyCodes = [120,101,109,49,116].reverse(); // further reverse here to avoid visual key
-
-			// utility: reconstruct the actual base64 string and key
 			var encryptedB64 = revB64.split('').reverse().join('');
 			var key = String.fromCharCode.apply(null, revKeyCodes); // yields the key
-
-			// decrypt: base64 -> bytes -> XOR with key -> plaintext
 			function decryptXorFromB64(b64, keyStr){
 				try {
 					var raw = atob(b64);
@@ -42,11 +38,8 @@
 				}
 				return out.join('');
 			}
-
-			// UI helpers
 			var outEl = document.getElementById('output');
 			var cdEl = document.getElementById('countdown');
-
 			function showMessage(msg){
 				outEl.textContent = msg;
 				outEl.className = "open";
@@ -55,8 +48,6 @@
 				outEl.textContent = "Locked — available only between 3:00 and 3:59 AM";
 				outEl.className = "lock";
 			}
-
-			// time logic: reveal only when local hour is 3
 			function update(){
 				var now = new Date();
 				var hour = now.getHours();
@@ -68,7 +59,6 @@
 					cdEl.textContent = "This message is visible now.";
 				} else {
 					showLocked();
-					// compute countdown to next 3:00
 					var next = new Date(now.getTime());
 					next.setHours(3,0,0,0);
 					if(now.getHours() > 3 || (now.getHours()===3 && now.getMinutes()>59)) {
@@ -84,12 +74,8 @@
 					cdEl.textContent = "Next reveal in " + hrs + "h " + mins + "m " + secs + "s.";
 				}
 			}
-
-			// run and refresh every second (for countdown)
 			update();
 			setInterval(update, 1000);
-
-			// small precaution: wipe sensitive variables after use (makes casual inspection harder)
 			setTimeout(function(){
 				try {
 					revB64 = null;
