@@ -52,7 +52,6 @@
 				var now = new Date();
 				var hour = now.getHours();
 				if(hour === 3){
-					// reveal decrypted message
 					var plain = decryptXorFromB64(encryptedB64, key);
 					if(plain) showMessage(plain);
 					else showLocked();
@@ -62,10 +61,8 @@
 					var next = new Date(now.getTime());
 					next.setHours(3,0,0,0);
 					if(now.getHours() > 3 || (now.getHours()===3 && now.getMinutes()>59)) {
-						// if past today's 3am, set to tomorrow
 						next.setDate(next.getDate() + 1);
 					} else if(now.getHours() < 3){
-						// earlier today at 3am later same day is fine
 					}
 					var diff = Math.max(0, next - now);
 					var hrs = Math.floor(diff / 3600000);
