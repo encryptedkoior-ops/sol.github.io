@@ -55,7 +55,7 @@
 					var plain = decryptXorFromB64(encryptedB64, key);
 					if(plain) showMessage(plain);
 					else showLocked();
-					cdEl.textContent = "This message is visible now.";
+					cdEl.textContent = "Time trial starts now. Good luck. It resets.";
 				} else {
 					showLocked();
 					var next = new Date(now.getTime());
