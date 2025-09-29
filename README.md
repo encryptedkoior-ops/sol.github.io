@@ -55,7 +55,7 @@
 					var plain = decryptXorFromB64(encryptedB64, key);
 					if(plain) showMessage(plain);
 					else showLocked();
-					cdEl.textContent = "Time trial starts now. Good luck. It resets.";
+					cdEl.textContent = "Time trial starts now. Good luck. It resets. https://solsticeisuponus.github.io/solsticeANDconvergence";
 				} else {
 					showLocked();
 					var next = new Date(now.getTime());
